@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elf on the Shelf - Scout Elf Magic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Kalam:wght@300;400;700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-red: #C41E3A;
+            --primary-green: #0F5132;
+            --gold: #FFD700;
+            --snow: #FFFFFF;
+            --dark: #1a1a1a;
+        }
+
+        body {
+            font-family: 'Kalam', cursive;
+            background: linear-gradient(135deg, #0F5132 0%, #1a1a1a 50%, #0F5132 100%);
+            color: var(--snow);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated snowflakes */
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+            background: radial-gradient(circle at center, rgba(15, 81, 50, 0.8) 0%, rgba(26, 26, 26, 0.95) 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('elf-image.webp') center/cover no-repeat;
+            opacity: 0.15;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .hero-title {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            color: var(--gold);
+            text-shadow: 
+                3px 3px 0px var(--primary-red),
+                6px 6px 20px rgba(0, 0, 0, 0.8),
+                0 0 30px rgba(255, 215, 0, 0.5);
+            margin-bottom: 1rem;
+            animation: titleGlow 3s ease-in-out infinite;
+            letter-spacing: 2px;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { 
+                text-shadow: 
+                    3px 3px 0px var(--primary-red),
+                    6px 6px 20px rgba(0, 0, 0, 0.8),
+                    0 0 30px rgba(255, 215, 0, 0.5);
+            }
+            50% { 
+                text-shadow: 
+                    3px 3px 0px var(--primary-red),
+                    6px 6px 20px rgba(0, 0, 0, 0.8),
+                    0 0 50px rgba(255, 215, 0, 0.8);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: var(--snow);
+            margin-bottom: 3rem;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Social Section */
+        .social-section {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .social-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .social-icon {
+            width: 200px;
+            height: auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .social-icon svg {
+            width: 100%;
+            height: auto;
+            fill: var(--gold);
+        }
+
+        .social-label {
+            font-size: 0.9rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .platform-image {
+            width: 200px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .platform-image:hover {
+            transform: scale(1.1) rotate(2deg);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* CA Copier Section */
+        .ca-section {
+            background: linear-gradient(135deg, rgba(196, 30, 58, 0.2) 0%, rgba(15, 81, 50, 0.2) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .ca-section h2 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .ca-copier {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 1rem;
+            border: 2px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .ca-input {
+            flex: 1;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            color: var(--snow);
+            font-size: 1rem;
+            font-family: 'Kalam', monospace;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .ca-input:focus {
+            border-color: var(--gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .copy-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary-red) 0%, #8B1538 100%);
+            border: none;
+            border-radius: 10px;
+            color: var(--snow);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Kalam', cursive;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.4);
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(196, 30, 58, 0.6);
+            background: linear-gradient(135deg, #8B1538 0%, var(--primary-red) 100%);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .copy-success {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-green);
+            color: var(--snow);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            z-index: 10000;
+            animation: slideIn 0.3s ease-out;
+            display: none;
+        }
+
+        .copy-success.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        /* DexScreener Section */
+        .dexscreener-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (max-width: 968px) {
+            .dexscreener-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .dexscreener-iframe {
+            width: 100%;
+            min-height: 500px;
+            border-radius: 15px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            animation: fadeInUp 1.8s ease-out;
+        }
+
+        /* Story Section */
+        .story-section {
+            background: linear-gradient(135deg, rgba(15, 81, 50, 0.3) 0%, rgba(196, 30, 58, 0.3) 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 2s ease-out;
+        }
+
+        .story-section h2 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--gold);
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .story-content {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: justify;
+        }
+
+        .story-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .story-content strong {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* Image Gallery */
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            transition: transform 0.3s ease;
+            animation: fadeInUp 2.2s ease-out;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Music Toggle Button */
+        .music-toggle {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 2000;
+            width: 72px;
+            height: 72px;
+            border-radius: 18px;
+            border: 3px solid rgba(255, 215, 0, 0.6);
+            background: radial-gradient(120px 120px at 30% 20%, rgba(255,255,255,0.2), transparent 40%),
+                        linear-gradient(135deg, var(--primary-red) 0%, #8B1538 100%);
+            color: var(--snow);
+            font-size: 1.6rem;
+            box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(255, 215, 0, 0.08);
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: toggleBounce 2s infinite ease-in-out, toggleGlow 2.6s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-toggle:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 18px 46px rgba(0, 0, 0, 0.65), 0 0 0 12px rgba(255, 215, 0, 0.12);
+        }
+
+        @keyframes toggleBounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-6px); }
+        }
+
+        @keyframes toggleGlow {
+            0%, 100% { box-shadow: 0 12px 34px rgba(0, 0, 0, 0.6), 0 0 0 8px rgba(255, 215, 0, 0.08); }
+            50% { box-shadow: 0 16px 42px rgba(0, 0, 0, 0.7), 0 0 0 14px rgba(255, 215, 0, 0.16); }
+        }
+
+        .music-hint {
+            position: fixed;
+            right: 100px;
+            bottom: 28px;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--snow);
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 215, 0, 0.4);
+            font-size: 0.95rem;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.5);
+            animation: hintFloat 2.8s ease-in-out infinite;
+            white-space: nowrap;
+        }
+
+        .music-hint::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent transparent rgba(255, 215, 0, 0.4);
+        }
+
+        @keyframes hintFloat {
+            0%, 100% { transform: translateY(0); opacity: 0.95; }
+            50% { transform: translateY(-6px); opacity: 1; }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .dexscreener-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 1rem;
+                min-height: 90vh;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .social-section {
+                gap: 1rem;
+                margin-top: 1.5rem;
+            }
+            
+            .platform-image {
+                width: 140px;
+            }
+            
+            .social-icon {
+                width: 140px;
+                padding: 15px;
+            }
+
+            .social-label {
+                font-size: 0.8rem;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .ca-section {
+                padding: 1.5rem;
+            }
+
+            .ca-section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .ca-copier {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .ca-input {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .copy-btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
+            }
+
+            .dexscreener-iframe {
+                min-height: 400px;
+            }
+
+            .story-section {
+                padding: 2rem 1.5rem;
+            }
+
+            .story-section h2 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .story-content {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            .image-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 1rem;
+            }
+
+            .music-toggle {
+                width: 64px;
+                height: 64px;
+                font-size: 1.4rem;
+                right: 14px;
+                bottom: 14px;
+            }
+
+            .music-hint {
+                right: 86px;
+                bottom: 24px;
+                font-size: 0.85rem;
+                padding: 8px 12px;
+            }
+
+            .footer {
+                padding: 1.5rem 1rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .platform-image,
+            .social-icon {
+                width: 120px;
+            }
+
+            .social-section {
+                gap: 0.75rem;
+            }
+
+            .ca-section h2,
+            .story-section h2 {
+                font-size: 1.3rem;
+            }
+
+            .image-gallery {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.75rem;
+            }
+
+            .dexscreener-iframe {
+                min-height: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Snowflakes -->
+    <div id="snowflakes"></div>
+
+    <!-- Background Music + Toggle -->
+    <!-- 
+        TO USE A LOCAL AUDIO FILE:
+        1. Download a Christmas song (MP3 format recommended)
+        2. Save it in the same folder as this HTML file
+        3. Name it "christmas-song.mp3"
+        4. The audio will automatically use the local file if available
+    -->
+    <button class="music-toggle" id="musicToggle" title="Toggle music" aria-label="Toggle music">🎵</button>
+    <div id="musicHint" class="music-hint">Tap for music</div>
+    <audio id="bgMusic" loop preload="auto">
+        <!-- Local file (checked first if available) -->
+        <source src="christmas-song.mp3" type="audio/mpeg">
+        <!-- Fallback online sources -->
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Jingle_Bells_%28instrumental%29.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Elf on the Shelf</h1>
+            <p class="hero-subtitle">Embrace the Magic of Scout Elf Tradition</p>
+            
+            <!-- Social Section -->
+            <div class="social-section">
+                <div class="social-item">
+                    <a href="https://t.me/ELFoneth" class="social-icon" target="_blank">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        </svg>
+                    </a>
+                    <span class="social-label">Telegram</span>
+                </div>
+                
+                <div class="social-item">
+                    <a href="https://x.com/elfoneth" class="social-icon" target="_blank">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                        </svg>
+                    </a>
+                    <span class="social-label">X (Twitter)</span>
+                </div>
+                
+                <div class="social-item">
+                    <a href="#" target="_blank">
+                        <img src="dexscreener.webp" alt="DexScreener" class="platform-image">
+                    </a>
+                </div>
+                
+                <div class="social-item">
+                    <a href="#" target="_blank">
+                        <img src="dextools.png" alt="DexTools" class="platform-image">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- CA Copier and DexScreener Section -->
+        <section class="dexscreener-section">
+            <!-- CA Copier Section -->
+            <div class="ca-section" style="margin-bottom: 0;">
+                <h2>Contract Address</h2>
+                <div class="ca-copier">
+                    <input type="text" id="caInput" class="ca-input" value="0x0000000000000000000000000000000000000000" readonly>
+                    <button class="copy-btn" onclick="copyCA()">Copy</button>
+                </div>
+            </div>
+
+            <!-- DexScreener Section -->
+            <div class="ca-section" style="margin-bottom: 0;">
+                <h2>Live Chart</h2>
+                <iframe 
+                    src="https://dexscreener.com/?embed=1&theme=dark&trades=0&info=0" 
+                    class="dexscreener-iframe"
+                    frameborder="0"
+                    allowtransparency="true"
+                    title="DexScreener Chart">
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section class="story-section">
+            <h2>The Elf on the Shelf® Tradition</h2>
+            <div class="story-content">
+                <p>
+                    Adopt this beloved family tradition that has captured the hearts of children everywhere, and embrace the magic of having a <strong>Scout Elf</strong> who reports to Santa each night during the holidays. These Elves and accessories are everything needed to make lasting Christmas memories!
+                </p>
+                <p>
+                    The Elf on the Shelf® Tradition is a special <strong>Scout Elf</strong> sent from the North Pole to help Santa Claus manage his naughty and nice lists. When a family adopts a scout elf and gives it a name, the Scout Elf receives its Christmas magic and can fly to the North Pole each night to tell Santa Claus about all of the day's adventures. Each morning, the Scout Elf returns to its family and perches in a different place to watch the fun. Children love to wake up and race around the house looking for their Scout Elf each morning.
+                </p>
+                <p>
+                    There are two simple rules that every child knows when it comes to having a Scout Elf. First, a Scout Elf cannot be touched; Christmas magic is very fragile and if a Scout Elf is touched it may lose that magic and be unable to fly back to the North Pole. Second, a Scout Elf cannot speak or move while anyone in the house is awake! A Scout Elf's job is to watch and listen.
+                </p>
+                <p>
+                    Scout Elves typically appear in their families' homes at the beginning of the holiday season. On Christmas Eve, the Scout Elves return to the North Pole with Santa Claus—until next year!
+                </p>
+            </div>
+        </section>
+
+        <!-- Image Gallery -->
+        <div class="image-gallery">
+            <div class="gallery-item">
+                <img src="elf-image.webp" alt="Elf on the Shelf">
+            </div>
+            <div class="gallery-item">
+                <img src="elf-image-two.jpg" alt="Elf on the Shelf">
+            </div>
+            <div class="gallery-item">
+                <img src="elf-image-three.webp" alt="Elf on the Shelf">
+            </div>
+            <div class="gallery-item">
+                <img src="elf-image-four.webp" alt="Elf on the Shelf">
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 Elf on the Shelf. All rights reserved. Embrace the Magic!</p>
+    </footer>
+
+    <!-- Copy Success Message -->
+    <div id="copySuccess" class="copy-success">
+        ✓ Contract Address Copied!
+    </div>
+
+    <script>
+        // Create snowflakes
+        function createSnowflakes() {
+            const snowflakeContainer = document.getElementById('snowflakes');
+            const snowflakeSymbols = ['❄', '❅', '❆'];
+            
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.animationDelay = Math.random() * 2 + 's';
+                snowflake.style.opacity = Math.random() * 0.5 + 0.5;
+                snowflakeContainer.appendChild(snowflake);
+            }
+        }
+
+        // Copy CA function
+        function copyCA() {
+            const caInput = document.getElementById('caInput');
+            caInput.select();
+            caInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            try {
+                navigator.clipboard.writeText(caInput.value).then(() => {
+                    showCopySuccess();
+                });
+            } catch (err) {
+                // Fallback for older browsers
+                document.execCommand('copy');
+                showCopySuccess();
+            }
+        }
+
+        // Show copy success message
+        function showCopySuccess() {
+            const successMsg = document.getElementById('copySuccess');
+            successMsg.classList.add('show');
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 2000);
+        }
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            createSnowflakes();
+
+            const music = document.getElementById('bgMusic');
+            const toggle = document.getElementById('musicToggle');
+            const musicHint = document.getElementById('musicHint');
+            
+            if (music) {
+                music.volume = 0.35;
+                
+                // Check if audio can play
+                music.addEventListener('canplaythrough', () => {
+                    console.log('Audio can play');
+                }, { once: true });
+
+                // Handle audio errors
+                music.addEventListener('error', (e) => {
+                    console.error('Audio error:', e);
+                    if (toggle) {
+                        toggle.textContent = '❌';
+                        toggle.title = 'Audio failed to load. Please add a local audio file.';
+                    }
+                    // Try to load local file if available
+                    const localSource = document.createElement('source');
+                    localSource.src = 'christmas-song.mp3';
+                    localSource.type = 'audio/mpeg';
+                    music.appendChild(localSource);
+                    music.load();
+                });
+
+                // Attempt autoplay (may be blocked until user gesture)
+                const tryPlay = () => {
+                    music.play().then(() => {
+                        if (toggle) toggle.textContent = '🎵';
+                        if (musicHint) musicHint.style.display = 'none';
+                        console.log('Music playing');
+                    }).catch((err) => {
+                        if (toggle) toggle.textContent = '🔇';
+                        console.log('Autoplay blocked:', err);
+                    });
+                };
+
+                tryPlay();
+
+                // First user interaction will start music if blocked
+                const gesturePlay = () => {
+                    if (music.paused) {
+                        music.play().then(() => {
+                            if (toggle) toggle.textContent = '🎵';
+                            if (musicHint) musicHint.style.display = 'none';
+                        }).catch((err) => {
+                            console.error('Play failed:', err);
+                        });
+                    }
+                };
+                
+                // Listen for any user interaction
+                document.addEventListener('click', gesturePlay, { once: true });
+                document.addEventListener('touchstart', gesturePlay, { once: true });
+
+                // Toggle button
+                if (toggle) {
+                    toggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (music.paused) {
+                            music.play().then(() => {
+                                toggle.textContent = '🎵';
+                                if (musicHint) musicHint.style.display = 'none';
+                            }).catch((err) => {
+                                console.error('Play failed:', err);
+                                toggle.textContent = '❌';
+                                alert('Unable to play audio. Please check if you have a local audio file named "christmas-song.mp3" in the same folder as this HTML file.');
+                            });
+                        } else {
+                            music.pause();
+                            toggle.textContent = '🔇';
+                        }
+                    });
+                }
+            }
+        });
+
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
